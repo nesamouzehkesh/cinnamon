@@ -6,13 +6,15 @@ import { getFunName } from '../helpers';
 class StorePicker extends React.Component {
     constructor() {
         super();
-        this.goToStore = this.goToStore.bind(this);
+        this.goToStore = this.goToStore.bind(this); //this will bind the `this` in methods outside render to main component
     }
 
     goToStore(event) {
         event.preventDefault();
-        console.log('you changed the URL');
-        console.log(this.storeInput.value); //this `this` needs to be bound to the main component, otherwise it's null
+        const storeId = this.storeInput.value; //this `this` needs to be bound to the main component, otherwise it's null
+        console.log(`${storeId}`);
+
+        this.context.router.transitionTo(`/store/${storeId}`);
     }
 
     render() {
@@ -25,6 +27,10 @@ class StorePicker extends React.Component {
             </form>
         ) 
     }
+}
+
+StorePicker.contextTypes = {
+    router: React.PropTypes.object
 }
 
 export default StorePicker;
