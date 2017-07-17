@@ -1,22 +1,19 @@
-/**
- * Created by admin on 18/05/2017.
- */
 import React from 'react';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
-import products from '../sample-products';
 import Fish from './Fish';
-
+import sampleFishes from '../sample-fishes';
 
 class App extends React.Component {
     constructor() {
-        super(); //to be able to use `this` to point to the main component
+        super();
 
         this.addFish = this.addFish.bind(this);
         this.loadFishes = this.loadFishes.bind(this);
+        this.addToOrder = this.addToOrder.bind(this);
 
-        //getinitialstate
+        // getinitialState
         this.state = {
             fishes: {},
             order: {}
@@ -24,38 +21,46 @@ class App extends React.Component {
     }
 
     addFish(fish) {
-        // Copy our state to a temp variable
+        // update our state
         const fishes = {...this.state.fishes};
-        // Add our new fish to our temp variable
+        // add in our new fish
         const timestamp = Date.now();
         fishes[`fish-${timestamp}`] = fish;
-        // Set new sate for fishes
-        this.setState({fishes: fishes});
+        // set state
+        this.setState({ fishes });
     }
 
     loadFishes() {
         this.setState({
-            fishes: products
+            fishes: sampleFishes
         });
+    }
+
+    addToOrder(key) {
+        // take a copy of our state
+        const order = {...this.state.order};
+        // update or add the new number of fish ordered
+        order[key] = order[key] + 1 || 1;
+        // update our state
+        this.setState({ order });
     }
 
     render() {
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
-                    <Header tagline="I am dynamic"/>
-                    <ul className="list-of-fish">
+                    <Header tagline="Fresh Seafood Market" />
+                    <ul className="list-of-fishes">
                         {
-                            Object.keys(this.state.fishes)
-                                .map(key => <Fish key={key} details={this.state.fishes[key]}/>)
+                            Object
+                                .keys(this.state.fishes)
+                                .map(key => <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}/>)
                         }
-
                     </ul>
                 </div>
-                <Order />
-                <Inventory addFish={this.addFish} loadFishes={this.loadFishes}/>
+                <Order fishes={this.state.fishes} order={this.state.order}/>
+                <Inventory addFish={this.addFish} loadFishes={this.loadFishes} />
             </div>
-
         )
     }
 }

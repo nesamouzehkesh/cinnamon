@@ -6,7 +6,9 @@ import React from 'react';
 class Order extends React.Component {
     render() {
         return (
-            <p>hey Order!</p>
+            <div className="order-wrap">
+                <p>hey Order!</p>
+            </div>
         )
     }
 }
