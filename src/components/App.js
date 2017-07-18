@@ -14,6 +14,8 @@ class App extends React.Component {
         this.loadFishes = this.loadFishes.bind(this);
         this.addToOrder = this.addToOrder.bind(this);
         this.updateFish = this.updateFish.bind(this);
+        this.removeFish = this.removeFish.bind(this);
+        this.removeFromOrder = this.removeFromOrder.bind(this);
 
         // getinitialState
         this.state = {
@@ -65,6 +67,22 @@ class App extends React.Component {
         this.setState({ fishes });
     }
 
+    removeFish(key) {
+        //first take a copy of our fishes
+        const fishes = {...this.state.fishes};
+        //you can't just say `delete fishes[key]` because we are hooked
+        //to firebase, so with firebase you need to explicitly set it to null:
+        fishes[key] = null;
+        //update your state:
+        this.setState({ fishes });
+    }
+
+    removeFromOrder(key) {
+        const order = {...this.state.order};
+        delete order[key];
+        this.setState({ order });
+    }
+
     loadFishes() {
         this.setState({
             fishes: sampleFishes ,
@@ -96,11 +114,14 @@ class App extends React.Component {
                 <Order fishes={this.state.fishes}
                        order={this.state.order}
                        params={this.props.params}
+                       removeFromOrder={this.removeFromOrder}
                 />
                 <Inventory addFish={this.addFish}
                            loadFishes={this.loadFishes}
                            fishes={this.state.fishes}
                            updateFish={this.updateFish}
+                           removeFish={this.removeFish}
+
                 />
             </div>
         )
