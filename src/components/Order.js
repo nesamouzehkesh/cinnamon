@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import { formatPrice } from '../helpers';
+import FilterableProductTable from "./table/FilterableProductTable";
 
 class Order extends React.Component {
     constructor() {
@@ -43,6 +44,8 @@ class Order extends React.Component {
             }
             return prevTotal;
         }, 0);
+        /*FilterableProductTable component is just a test, you can
+        * delete it at a later time*/
         return (
             <div className="order-wrap">
                 <h2>hey Order!</h2>
@@ -53,7 +56,7 @@ class Order extends React.Component {
                         {formatPrice(total)}
                     </li>
                 </ul>
-
+                <FilterableProductTable products={this.props.products}/>
             </div>
         )
     }
