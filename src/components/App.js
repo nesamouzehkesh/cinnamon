@@ -5,7 +5,6 @@ import Inventory from './Inventory';
 import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
 import base from '../base';
-import products from '../products';
 
 class App extends React.Component {
     constructor() {
@@ -22,7 +21,6 @@ class App extends React.Component {
         this.state = {
             fishes: {},
             order: {},
-            products: {}
         };
     }
 
@@ -42,9 +40,8 @@ class App extends React.Component {
                 order: JSON.parse(localStorageRef)
             });
         }
-        //this is for a small side project test in Order Component
-        //from react tutorial (you can delete this at a later time)
-        this.setState({products: products});
+
+        this.setState({products: sampleFishes});
     }
 
     componentWillUnmount() {
@@ -55,7 +52,6 @@ class App extends React.Component {
         localStorage.setItem(`order-${this.props.params.storeId}`, JSON.stringify(nextState.order));
     }
 
-    
         addFish(fish) {
         // update our state
         const fishes = {...this.state.fishes};
@@ -120,7 +116,6 @@ class App extends React.Component {
                        order={this.state.order}
                        params={this.props.params}
                        removeFromOrder={this.removeFromOrder}
-                       products={this.state.products}
                 />
                 <Inventory addFish={this.addFish}
                            loadFishes={this.loadFishes}

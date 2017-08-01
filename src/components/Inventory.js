@@ -21,7 +21,7 @@ class Inventory extends React.Component {
 
         console.log(updatedFish); //up until here you can see the changes in the log
         //but nothing changes on the page because we have not yet asked our state to change accordingly
-        //now we need to take this updatedFish and pass it to App.js to update the satet
+        //now we need to take this updatedFish and pass it to Scratch.js to update the satet
         this.props.updateFish(key, updatedFish);
 
     }
